@@ -41,7 +41,9 @@ p.lead {
   color: #FFF;
 }
 /* Main elements end */
-
+.error {
+	color: red;
+}
 
 /*****************************************************************************
  * Various other styles
@@ -124,6 +126,23 @@ ul.items > li:hover h5 {
 .item h5 {
   margin-top: 0;
   margin-bottom: 5px;
+}
+.item-action {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.item-action h5 {
+  width: 300px;
+}
+.delete-action {
+  border: none;
+  outline: none;
+  color: red;
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
 }
 img {
   max-width: 100%;

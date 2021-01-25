@@ -5,7 +5,7 @@ db = SQLAlchemy()
 class Artist(db.Model):
     __tablename__ = 'artist'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String())
+    name = db.Column(db.String(), nullable = False)
     city = db.Column(db.String(120))
     state = db.Column(db.String(120))
     phone = db.Column(db.String(120))
@@ -20,7 +20,10 @@ class Artist(db.Model):
         return [str(x) for x in self._genres.split(',')]
     @genres.setter
     def genres(self, value):
-        self._genres += ',%s' % value
+        data = ''
+        for v in value:
+           data += ',%s' % str(v)
+        self._genres =  data
     def __repr__(self) -> str:
         return f'Artist(id:{self.id}, name: {self.name})'
 
@@ -29,7 +32,7 @@ class Artist(db.Model):
 class Venue(db.Model):
     __tablename__ = 'venue'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    name = db.Column(db.String, nullable = False)
     city = db.Column(db.String(120))
     state = db.Column(db.String(120))
     address = db.Column(db.String(120))
@@ -45,7 +48,6 @@ class Venue(db.Model):
         return [str(x) for x in self._genres.split(',')]
     @genres.setter
     def genres(self, value):
-        print('this ia VLUE' + str(value[1]))
         data = ''
         for v in value:
            data += ',%s' % str(v)
@@ -59,6 +61,6 @@ class Show(db.Model):
     __tablename__ = 'shows'
     artist_id =  db.Column(db.Integer, db.ForeignKey('artist.id'), primary_key=True)
     venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'), primary_key=True)
-    start_time =  db.Column('start_time', db.DateTime, primary_key=True)
+    start_time =  db.Column('start_time', db.DateTime, primary_key=True, nullable = False)
     artists = db.relationship('Artist', backref = 'show_list', lazy = True)
     venues = db.relationship('Venue', backref = 'show_list', lazy = True)
